@@ -22,7 +22,7 @@ const products = await fetchAllProducts({ search });
       <section>
         <div className='flex justify-between items-center'>
           <h4 className='font-medium text-lg'>
-            {totalProducts} product{totalProducts > 1 && 's'}
+            {totalProducts} produktów{totalProducts > 1 && 's'}
           </h4>
           <div className='flex gap-x-4'>
             <Button
@@ -51,7 +51,7 @@ const products = await fetchAllProducts({ search });
       <div>
         {totalProducts === 0 ? (
           <h5 className='text-2xl mt-16'>
-            Sorry, no products matched your search...
+            Przepraszamy, żaden produkt nie pasował do Twojego wyszukiwania...
           </h5>
         ) : layout === 'grid' ? (
           <ProductsGrid products={products} />

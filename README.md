@@ -5333,3 +5333,6 @@ export const GET = async (req: NextRequest) => {
   redirect('/orders');
 };
 ```
+https://tailwindflex.com/@rp-ketan/basic-resume-template
+```
+https://themes.diviplus.io/furniture-store/product/comfortable-white-relaxing-chair/

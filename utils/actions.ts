@@ -1,6 +1,7 @@
 import db from '@/utils/db';
 import { redirect } from 'next/navigation';
 
+
 export const fetchSingleProduct = async (productId: string) => {
   const product = await db.product.findUnique({
     where: {
