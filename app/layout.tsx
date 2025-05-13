@@ -32,16 +32,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
- return (
-  <ClerkProvider>
-    <html lang='en' suppressHydrationWarning>
-      <body className={inter.className}>
-        <Providers>
-          <Navbar />
-          <Container className='py-20'>{children}</Container>
-        </Providers>
-      </body>
-    </html>
-  </ClerkProvider>
-);
+  return (
+    <ClerkProvider>
+      <html
+        lang="pl"
+        suppressHydrationWarning
+        className={`${geistSans.variable} ${geistMono.variable}`}
+      >
+        <body className={inter.className}>
+          <Providers>
+            <Navbar />
+            <Container className="py-20">{children}</Container>
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
+  );
 }
