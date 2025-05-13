@@ -1,9 +1,23 @@
-import React from 'react'
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
-function SignOutLink() {
-  return (
-    <div>SignOutLink</div>
-  )
-}
+const isPublicRoute = createRouteMatcher([
+  '/',
+  '/products(.*)',
+  '/about',
+]);
 
-export default SignOutLink
+export default clerkMiddleware(async (auth, req) => {
+  const { userId } = await auth();
+
+  if (!isPublicRoute(req) && !userId) {
+    // Użytkownik nie jest zalogowany i nie jest na stronie publicznej
+    return NextResponse.redirect(new URL('/sign-in', req.url));
+  }
+  // Jeśli zalogowany albo publiczna ścieżka → kontynuuj
+  return NextResponse.next();
+});
+
+export const config = {
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
+};

@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Container from "@/components/global/Container";
 import Providers from "./Providers";
+import { ClerkProvider } from '@clerk/nextjs';
 
 // Czcionki lokalne
 const geistSans = localFont({
@@ -31,14 +32,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="pl" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+ return (
+  <ClerkProvider>
+    <html lang='en' suppressHydrationWarning>
       <body className={inter.className}>
         <Providers>
           <Navbar />
-          <Container className="py-20">{children}</Container>
+          <Container className='py-20'>{children}</Container>
         </Providers>
       </body>
     </html>
-  );
+  </ClerkProvider>
+);
 }
