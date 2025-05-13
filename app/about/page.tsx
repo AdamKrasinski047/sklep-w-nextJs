@@ -1,4 +1,4 @@
-import adam from '@/public/images/adam.jpg';
+
 import Image from 'next/image';
 import { FiMail, FiPhone, FiGithub } from 'react-icons/fi';
 
