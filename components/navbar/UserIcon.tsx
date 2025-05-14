@@ -1,9 +1,11 @@
-import { LuUser } from 'react-icons/lu';
-import { currentUser } from '@clerk/nextjs/server';
-import Image from 'next/image';
+'use client';
 
-async function UserIcon() {
-  const user = await currentUser();
+import { LuUser } from 'react-icons/lu';
+import Image from 'next/image';
+import { useUser } from '@clerk/nextjs';
+
+function UserIcon() {
+  const { user } = useUser();
   const profileImage = user?.imageUrl;
 
   if (profileImage) {

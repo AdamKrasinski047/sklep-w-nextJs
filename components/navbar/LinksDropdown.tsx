@@ -1,3 +1,5 @@
+'use client';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,9 +18,13 @@ import {
   SignOutButton,
   SignedIn,
   SignedOut,
+  useAuth,
 } from '@clerk/nextjs';
 
 function LinksDropdown() {
+  const { userId } = useAuth();
+  const isAdmin = userId === process.env.NEXT_PUBLIC_ADMIN_USER_ID;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,9 +41,7 @@ function LinksDropdown() {
               <button className='w-full text-left'>Login</button>
             </SignInButton>
           </DropdownMenuItem>
-
           <DropdownMenuSeparator />
-
           <DropdownMenuItem>
             <SignUpButton mode='modal'>
               <button className='w-full text-left'>Register</button>
@@ -46,16 +50,17 @@ function LinksDropdown() {
         </SignedOut>
 
         <SignedIn>
-          {links.map((link) => (
-            <DropdownMenuItem key={link.href}>
-              <Link href={link.href} className='capitalize w-full'>
-                {link.label}
-              </Link>
-            </DropdownMenuItem>
-          ))}
-
+          {links.map((link) => {
+            if (link.label === 'dashboard' && !isAdmin) return null;
+            return (
+              <DropdownMenuItem key={link.href}>
+                <Link href={link.href} className='capitalize w-full'>
+                  {link.label}
+                </Link>
+              </DropdownMenuItem>
+            );
+          })}
           <DropdownMenuSeparator />
-
           <DropdownMenuItem>
             <SignOutButton>
               <button className='w-full text-left'>Wyloguj</button>
