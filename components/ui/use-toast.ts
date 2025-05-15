@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { ToastActionElement, type ToastProps } from './toast';
+import { ToastActionElement } from './toast';
 
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000;
 
-type ToasterToast = ToastProps & {
+type ToasterToast = {
   id: string;
   title?: React.ReactNode;
   description?: React.ReactNode;
   action?: ToastActionElement;
+  variant?: 'default' | 'destructive';
 };
 
 const actionTypes = {
@@ -25,13 +26,13 @@ function genId() {
   return `${Date.now()}-${count}`;
 }
 
-export function toast({ ...props }: ToastProps) {
+export function toast(toast: Omit<ToasterToast, 'id'>) {
   const id = genId();
-  const update = new CustomEvent('shadcn-toast', {
+  const event = new CustomEvent('shadcn-toast', {
     detail: {
       id,
-      ...props,
+      ...toast,
     },
   });
-  window.dispatchEvent(update);
+  window.dispatchEvent(event);
 }
