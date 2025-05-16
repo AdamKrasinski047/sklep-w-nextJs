@@ -3,8 +3,13 @@
 import db from '@/utils/db';
 import { redirect } from 'next/navigation';
 import { renderError } from './error';
-import { getAuthUser } from './auth'; // make sure this file exists
-import { productSchema } from './schema';
+import { getAuthUser } from './auth';
+import {
+  productSchema,
+  imageSchema,
+  validateWithZodSchema,
+} from './schema';
+import { uploadImage } from '@/utils/supabase'; 
 
 export const fetchSingleProduct = async (productId: string) => {
   const product = await db.product.findUnique({
@@ -50,23 +55,25 @@ export const createProductAction = async (
 
   try {
     const rawData = Object.fromEntries(formData);
-    const validatedFields = productSchema.safeParse(rawData);
+    const file = formData.get('image') as File;
 
-    if (!validatedFields.success) {
-      const errors = validatedFields.error.errors.map((error) => error.message);
-      throw new Error(errors.join(', '));
-    }
+    const validatedFields = validateWithZodSchema(productSchema, rawData);
+    const validatedFile = validateWithZodSchema(imageSchema, { image: file });
+
+    const imageUrl = await uploadImage(validatedFile.image);
 
     await db.product.create({
       data: {
-        ...validatedFields.data,
-        image: '/images/product-1.jpg', // tymczasowe — potem Supabase
+        ...validatedFields,
+        image: imageUrl,
         clerkId: user.id,
       },
     });
 
     return { message: 'product created' };
   } catch (error) {
-    return renderError(error); // np. { message: 'name must be at least 2 characters.' }
+    return renderError(error);
   }
+
+  redirect('/admin/products');
 };
