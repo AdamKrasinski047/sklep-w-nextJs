@@ -4,6 +4,7 @@ import db from '@/utils/db';
 import { redirect } from 'next/navigation';
 import { renderError } from './error';
 import { getAuthUser } from './auth'; // make sure this file exists
+import { productSchema } from './schema';
 
 export const fetchSingleProduct = async (productId: string) => {
   const product = await db.product.findUnique({
@@ -45,34 +46,27 @@ export const createProductAction = async (
   prevState: any,
   formData: FormData
 ): Promise<{ message: string }> => {
+  const user = await getAuthUser();
+
   try {
-    const user = await getAuthUser();
+    const rawData = Object.fromEntries(formData);
+    const validatedFields = productSchema.safeParse(rawData);
 
-    const name = formData.get('name') as string;
-    const company = formData.get('company') as string;
-    const price = Number(formData.get('price'));
-    const image = formData.get('image') as File;
-    const description = formData.get('description') as string;
-    const featured = formData.get('featured') === 'on';
-
-    if (!name || !company || isNaN(price) || !description) {
-      return { message: 'Wszystkie pola są wymagane' };
+    if (!validatedFields.success) {
+      const errors = validatedFields.error.errors.map((error) => error.message);
+      throw new Error(errors.join(', '));
     }
 
     await db.product.create({
       data: {
-        name,
-        company,
-        price,
-        image: '/images/product-1.jpg',
-        description,
-        featured,
+        ...validatedFields.data,
+        image: '/images/product-1.jpg', // tymczasowe — potem Supabase
         clerkId: user.id,
       },
     });
 
-    return { message: 'Produkt utworzony pomyślnie!' };
+    return { message: 'product created' };
   } catch (error) {
-    return renderError(error);
+    return renderError(error); // np. { message: 'name must be at least 2 characters.' }
   }
 };

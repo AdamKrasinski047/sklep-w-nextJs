@@ -2,7 +2,7 @@
 
 import { useFormState } from 'react-dom';
 import { useEffect } from 'react';
-import { toast } from '../ui/use-toast'; // Adjusted the path to match the relative location
+import { useToast } from '@/hooks/use-toast'; // <- poprawiony import
 import { actionFunction } from '@/utils/types';
 
 const initialState = {
@@ -17,14 +17,15 @@ function FormContainer({
   children: React.ReactNode;
 }) {
   const [state, formAction] = useFormState(action, initialState);
+  const { toast } = useToast(); // <- poprawnie z hooka
 
   useEffect(() => {
     if (state.message) {
       toast({
-        title: state.message,
+        title: state.message, // można dodać też description
       });
     }
-  }, [state]);
+  }, [state, toast]);
 
   return <form action={formAction}>{children}</form>;
 }

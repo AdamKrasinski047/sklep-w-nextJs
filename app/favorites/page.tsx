@@ -1,25 +1,19 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { toast } from '@/components/ui/use-toast'
-import React from 'react'
+import { toast } from '@/hooks/use-toast';
 
-function Favpage() {
-  const handleClick = () => {
-   toast({
-  title: 'Sukces!',
-  description: 'Produkt został utworzony.',
-  variant: 'default',
-});
-
-  }
-
+export default function AboutPage() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Fav</h1>
-      <Button onClick={handleClick}>Pokaż toast</Button>
-    </div>
-  )
+    <button
+      className="p-4 bg-blue-500 text-white rounded"
+      onClick={() =>
+        toast({
+          title: 'Toast działa!',
+          description: 'Jeśli to widzisz, wszystko gra 🍞',
+        })
+      }
+    >
+      Testuj toast
+    </button>
+  );
 }
-
-export default Favpage

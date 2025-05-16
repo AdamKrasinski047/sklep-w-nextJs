@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ToastActionElement } from './toast';
 
-const TOAST_LIMIT = 1;
-const TOAST_REMOVE_DELAY = 1000;
+// const TOAST_LIMIT = 1;
+// const TOAST_REMOVE_DELAY = 1000;
 
 type ToasterToast = {
   id: string;
@@ -12,12 +12,12 @@ type ToasterToast = {
   variant?: 'default' | 'destructive';
 };
 
-const actionTypes = {
-  ADD_TOAST: 'ADD_TOAST',
-  UPDATE_TOAST: 'UPDATE_TOAST',
-  DISMISS_TOAST: 'DISMISS_TOAST',
-  REMOVE_TOAST: 'REMOVE_TOAST',
-};
+// const actionTypes = {
+//   ADD_TOAST: 'ADD_TOAST',
+//   UPDATE_TOAST: 'UPDATE_TOAST',
+//   DISMISS_TOAST: 'DISMISS_TOAST',
+//   REMOVE_TOAST: 'REMOVE_TOAST',
+// };
 
 let count = 0;
 
