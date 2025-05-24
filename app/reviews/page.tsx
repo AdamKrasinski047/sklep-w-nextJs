@@ -6,11 +6,11 @@ import { IconButton } from '@/components/form/Buttons';
 async function ReviewsPage() {
   const reviews = await fetchProductReviewsByUser();
   if (reviews.length === 0)
-    return <SectionTitle text='you have no reviews yet' />;
+    return <SectionTitle text='Nie wystawiłeś jeszcze żadnej opinii' />;
 
   return (
     <>
-      <SectionTitle text='Your Reviews' />
+      <SectionTitle text='Twoje opinię' />
       <section className='grid md:grid-cols-2 gap-8 mt-4 '>
         {reviews.map((review) => {
           const { comment, rating } = review;

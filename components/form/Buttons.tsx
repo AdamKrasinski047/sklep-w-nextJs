@@ -110,7 +110,7 @@ export const ProductSignInButton = () => {
   return (
     <SignInButton mode='modal'>
       <Button type='button' size='default' className='mt-8'>
-        Proszę zarejestruj się
+        Dodaj do koszyka
       </Button>
     </SignInButton>
   );
