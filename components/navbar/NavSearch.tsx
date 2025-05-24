@@ -1,10 +1,15 @@
 'use client';
+
 import { Input } from '../ui/input';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { useState, useEffect } from 'react';
 
-function NavSearch() {
+type NavSearchProps = {
+  className?: string;
+};
+
+function NavSearch({ className }: NavSearchProps) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
 
@@ -31,7 +36,7 @@ function NavSearch() {
     <Input
       type='search'
       placeholder='wyszukaj produkt...'
-      className='max-w-xs dark:bg-muted'
+      className={`max-w-xs dark:bg-muted ${className ?? ''}`}
       onChange={(e) => {
         setSearch(e.target.value);
         handleSearch(e.target.value);
@@ -40,4 +45,5 @@ function NavSearch() {
     />
   );
 }
+
 export default NavSearch;
