@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import { SubmitButton } from '@/components/form/Buttons';
 import FormContainer from '@/components/form/FormContainer';
@@ -7,12 +8,22 @@ import RatingInput from '@/components/reviews/RatingInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import { Button } from '@/components/ui/button';
 import { createReviewAction } from '@/utils/actions';
-import { useUser } from '@clerk/nextjs';
+import { useUser, SignInButton } from '@clerk/nextjs';
+
 function SubmitReview({ productId }: { productId: string }) {
   const [isReviewFormVisible, setIsReviewFormVisible] = useState(false);
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
+  if (!isSignedIn) {
+    return (
+      <div className='mt-10'>
+        <SignInButton mode='modal'>
+          <Button size='lg'>Zaloguj się, aby dodać opinię</Button>
+        </SignInButton>
+      </div>
+    );
+  }
   return (
-    <div>
+    <div className='mt-10'>
       <Button
         size='lg'
         className='capitalize'
@@ -20,6 +31,7 @@ function SubmitReview({ productId }: { productId: string }) {
       >
         wystaw opinię
       </Button>
+
       {isReviewFormVisible && (
         <Card className='p-8 mt-8'>
           <FormContainer action={createReviewAction}>
