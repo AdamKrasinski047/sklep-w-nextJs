@@ -51,3 +51,16 @@ Można bezpiecznie testować płatności przy pomocy kart testowych.
 
 📚 Więcej kart testowych znajdziesz tutaj:  
 🔗 [https://docs.stripe.com/testing](https://docs.stripe.com/testing)
+
+## ✨ Funkcje aplikacji
+
+- 🔐 Logowanie i rejestracja użytkownika (Clerk)
+- 🛍️ Lista produktów z filtrowaniem
+- ❤️ Dodawanie do ulubionych (zapis Supabase)
+- 🧾 Widok pojedynczego produktu
+- 🧑‍💻 Panel admina (CRUD produktów)
+- 💳 Stripe Checkout – integracja płatności (testowa)
+- 📦 Przycisk „Kup teraz” i przetwarzanie zamówienia
+- 🔄 Responsywny interfejs i animacje ładowania
+- 📤 Udostępnianie produktu (React Share)
+- 🔔 Powiadomienia toast / Radix Toast
